@@ -830,7 +830,7 @@ function openBookingModal(hotelIndex, roomIndex) {
       createdAt: new Date().toISOString(),
     };
 
-    fetch("http://localhost:5000/api/bookings", {
+    fetch("https://hotel-backend-ncgp.onrender.com/api/bookings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(booking),
@@ -856,7 +856,7 @@ function openBookingModal(hotelIndex, roomIndex) {
   if (!loggedInUser) return showToast("Please login to view bookings.");
   const role = loggedInUser.role;
 
-  fetch("http://localhost:5000/api/bookings")
+  fetch("https://hotel-backend-ncgp.onrender.com/api/bookings")
     .then((res) => res.json())
     .then((data) => {
       let list =
@@ -942,7 +942,7 @@ function cancelBooking(bookingId) {
   if (!loggedInUser) return showToast("Please login to view cancelled bookings.");
   const role = loggedInUser.role;
 
-  fetch("http://localhost:5000/api/cancelled")
+  fetch("https://hotel-backend-ncgp.onrender.com/api/cancelled")
     .then((res) => res.json())
     .then((data) => {
       let list =
@@ -983,7 +983,7 @@ function cancelBooking(bookingId) {
 
 
   async function renderRevenuePage() {
-    const revenueRes = await fetch("http://localhost:5000/api/revenue");
+    const revenueRes = await fetch("https://hotel-backend-ncgp.onrender.com/api/revenue");
 const dailyRevenue = await revenueRes.json();
 
   if (!loggedInUser) return showToast("Please login to view revenue.");
@@ -993,7 +993,7 @@ const dailyRevenue = await revenueRes.json();
 
   try {
     // 🧩 Fetch all bookings from backend
-    const res = await fetch("http://localhost:5000/api/bookings");
+    const res = await fetch("https://hotel-backend-ncgp.onrender.com/api/bookings");
     if (!res.ok) throw new Error("Failed to fetch bookings");
     const bookings = await res.json();
 
@@ -1116,13 +1116,13 @@ Net: ₹${(r.revenue - r.expenditure).toFixed(2)}
 
   try {
     // Fetch bookings to calculate total revenue for that date
-    const res = await fetch("http://localhost:5000/api/bookings");
+    const res = await fetch("https://hotel-backend-ncgp.onrender.com/api/bookings");
     const bookings = await res.json();
     const dateBookings = bookings.filter((b) => b.date === date);
     const totalRevenue = dateBookings.reduce((sum, b) => sum + (b.price || 0), 0);
 
     // Send to backend
-    const saveRes = await fetch("http://localhost:5000/api/revenue", {
+    const saveRes = await fetch("https://hotel-backend-ncgp.onrender.com/api/revenue", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -1182,7 +1182,7 @@ window.hm_openEditExpenditure = openEditExpenditure;
 
   try {
     // 🧩 Fetch current employees
-    const res = await fetch("http://localhost:5000/api/employees");
+    const res = await fetch("https://hotel-backend-ncgp.onrender.com/api/employees");
     const employees = await res.json();
 
     const grouped = EMPLOYEE_ROLES.reduce((acc, role) => {
@@ -1233,7 +1233,7 @@ window.hm_openEditExpenditure = openEditExpenditure;
       const phone = document.getElementById("empPhone").value.trim();
       if (!name) return showToast("Enter employee name.");
 
-      const res = await fetch("http://localhost:5000/api/employees", {
+      const res = await fetch("https://hotel-backend-ncgp.onrender.com/api/employees", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, role, phone }),
@@ -1273,7 +1273,7 @@ async function renderFiredEmployeesPage() {
     return showToast("Access denied.");
 
   try {
-    const res = await fetch("http://localhost:5000/api/employees/fired/all");
+    const res = await fetch("https://hotel-backend-ncgp.onrender.com/api/employees/fired/all");
     const fired = await res.json();
 
     app.innerHTML = `<div class="container">${headerHTML()}<div class="card">
@@ -1494,7 +1494,7 @@ async function renderFiredEmployeesPage() {
   const password = (document.getElementById("loginPassword") || {}).value;
   if (!email || !password) return showToast("Enter email and password.");
 
-  fetch("http://localhost:5000/api/users/login", {
+  fetch("https://hotel-backend-ncgp.onrender.com/api/users/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -1526,7 +1526,7 @@ async function renderFiredEmployeesPage() {
 
   if (!email || !password) return showToast("Enter email and password.");
 
-  fetch("http://localhost:5000/api/users/register", {
+  fetch("https://hotel-backend-ncgp.onrender.com/api/users/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password, role }),
@@ -1638,7 +1638,7 @@ function renderTablesPage() {
   if (!loggedInUser) return showToast("Please login to view tables.");
   if (loggedInUser.role !== "admin") return showToast("Access denied.");
 
-  fetch("http://localhost:5000/api/tables")
+  fetch("https://hotel-backend-ncgp.onrender.com/api/tables")
     .then(res => res.json())
     .then(tables => {
       app.innerHTML = `
